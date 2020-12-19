@@ -50,12 +50,11 @@ GIVE TASK [Hack the Planet 1](https://warehouse.joincoded.com/assignments/tasks/
 		    }
 ```
 		
-12. Add a level variable and an enum up top (enum is to limit our options, and to help reduce bugs)
+12. Add a level variable and a string currentScreen
 ```
 		    //Game state
 		    int level;
-		    enum Screen {MainMenu, Password, Win};
-		    Screen currentScreen = Screen.MainMenu;
+		    string currentScreen = "mainMenu";
 ```
 		
 13. Refactoring to make things look more organized:
@@ -82,7 +81,7 @@ This works, but the user has no feedback. Write a `StartGame()` method to displa
 
 ```
 		    void StartGame() {
-		    	currentScreen = Screen.Password;
+		    	currentScreen = "passwordScreen";
 		        Terminal.WriteLine ("You have chosen level " + level);
 		    }
 		    
@@ -115,9 +114,9 @@ GIVE TASK [Hack the Planet 2](https://warehouse.joincoded.com/assignments/tasks/
 		    void OnUserInput(string input){
 		        if (input == "menu") {
 		            ShowMainMenu ("Welcome back, Agent Huss");
-		        } else if (currentScreen == Screen.MainMenu) {
+		        } else if (currentScreen == "mainMenu") {
 		             SetLevel(input);
-		        } else if (currentScreen == Screen.Password) {
+		        } else if (currentScreen == "passwordScreen") {
 		            CheckPassword(input);
 		        }
 		    } 
@@ -141,7 +140,7 @@ Now, run the game to show what happens when there is a password match, and when 
 
 ```
 		    void StartGame() {
-		        currentScreen = Screen.Password;
+		        currentScreen = "passwordScreen";
 		        Terminal.WriteLine ("You have chosen level " + level);
 		        switch(level) {
 		        case 1: 
@@ -189,7 +188,7 @@ Now, run the game to show what happens when there is a password match, and when 
     }
 
     void AskForPassword(){
-        currentScreen = Screen.Password;
+        currentScreen = "passwordScreen";
         Terminal.WriteLine ("You have chosen level " + level);
         SetRandomPassword ();
         Terminal.WriteLine ("Enter password: " + password.Anagram()); //Tell them that this method is predefined. Use it. You don't need to know how it works, just what it does.
@@ -210,7 +209,7 @@ Now, run the game to show what happens when there is a password match, and when 
     }
     
     void DisplayWinScreen(){
-		currentScreen = Screen.Win;
+		currentScreen = "winScreen";
 		Terminal.ClearScreen();
 		Terminal.WriteLine("YOU WON!");
 	}
